@@ -4,9 +4,9 @@ import "gorm.io/gorm"
 
 type Game struct {
 	gorm.Model
-	id          string
-	name        string
-	category    int
-	description string
-	plataforms  string
+	Id          string
+	Name        string
+	Categories  string
+	Description string
+	Plataforms  string
 }
