@@ -10,7 +10,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func GameRoutes(route *gin.Engine) {
+func gameRoutes(route *gin.Engine) {
 	gamesGroup := route.Group("/game")
 	gamesGroup.Use(func(ctx *gin.Context) {
 		userId, err := authentication.ExtractTokenMetadata(ctx)

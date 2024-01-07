@@ -9,35 +9,40 @@ import (
 )
 
 type RegisterUserData struct {
-	username string
-	email    string
-	password string
-	phone    string
-	Roles    []string
+	Username string   `json:"username"`
+	Email    string   `json:"email"`
+	Password string   `json:"password"`
+	Phone    string   `json:"phone"`
+	Roles    []string `json:"roles"`
 }
 
 type DataResponse struct {
-	token string
-	user  entities.Users
+	Token string
+	User  *entities.Users
 }
 
 func ResgisterUser(data *RegisterUserData) utils.HttpResponse {
 	db := db.GetConnection()
-	var emailAlreadyUsed *entities.Users
-	db.Model(entities.Users{}).First(&emailAlreadyUsed).Where("email = ?", data.email)
-	if emailAlreadyUsed != nil {
+	var emailAlreadyUsed []*entities.Users
+	db.Model(entities.Users{}).Where("email = ?", data.Email).Find(&emailAlreadyUsed)
+	if len(emailAlreadyUsed) > 0 {
 		return utils.BadRequest[string]("O email já está sendo usado")
 	}
 	user := &entities.Users{}
-	hashedPassword, err := encrypter.Encrypter(data.password)
+	err := user.ValidUser(data.Username, data.Email, data.Password, data.Phone, data.Roles)
 	if err != nil {
 		return utils.BadRequest[string](err.Error())
 	}
-	user.ValidUser(data.username, data.email, hashedPassword, data.phone, data.Roles)
+	hashedPassword, err := encrypter.Encrypter(data.Password)
+	user.SetPassword(hashedPassword)
+	if err != nil {
+		return utils.BadRequest[string](err.Error())
+	}
 	db.Model(entities.Users{}).Create(&user)
 	token, err := authentication.CreateJwtToken(user.Id, user.Roles)
 	if err != nil {
 		return utils.BadRequest[string](err.Error())
 	}
-	return utils.Created[*DataResponse](&DataResponse{user: *user, token: token})
+	response := DataResponse{User: user, Token: token}
+	return utils.Created[*DataResponse](&response)
 }

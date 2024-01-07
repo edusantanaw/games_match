@@ -3,16 +3,17 @@ package entities
 import (
 	"errors"
 
+	"github.com/google/uuid"
 	"gorm.io/gorm"
 )
 
 type Users struct {
 	gorm.Model
 	Id       string `gorm:"primaryKey"`
-	username string
-	email    string `gorm:"unique"`
+	Username string
+	Email    string `gorm:"unique"`
 	password string
-	phone    *string
+	Phone    *string
 	Roles    []string `gorm:"serializer:json"`
 }
 
@@ -29,10 +30,15 @@ func (u *Users) ValidUser(username string, email string, password string, phone 
 	if len(roles) == 0 {
 		return errors.New("Os tipos de acesso são obrigatorios!")
 	}
-	u.username = username
-	u.email = email
+	u.Id = uuid.New().String()
+	u.Username = username
+	u.Email = email
 	u.password = password
-	u.phone = &phone
+	u.Phone = &phone
 	u.Roles = roles
 	return nil
+}
+
+func (u *Users) SetPassword(pass string) {
+	u.password = pass
 }

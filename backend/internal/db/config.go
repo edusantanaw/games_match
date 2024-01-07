@@ -26,5 +26,6 @@ func OpenConnection() {
 		panic("Erro ao conectar com o banco de dados!")
 	}
 	db.AutoMigrate(&entities.Game{})
+	db.AutoMigrate(&entities.Users{})
 	database = db
 }
