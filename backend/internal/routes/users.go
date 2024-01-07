@@ -9,4 +9,5 @@ import (
 func usersRoute(c *gin.Engine) {
 	usersGroup := c.Group("/users")
 	usersGroup.POST("/signup", adapters.GinAdapter[*controllers.RegisterUserData](controllers.ResgisterUser))
+	usersGroup.POST("/signin", adapters.GinAdapter[*controllers.LoginData](controllers.Login))
 }

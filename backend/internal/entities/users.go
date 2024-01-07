@@ -12,7 +12,7 @@ type Users struct {
 	Id       string `gorm:"primaryKey"`
 	Username string
 	Email    string `gorm:"unique"`
-	password string
+	Password string
 	Phone    *string
 	Roles    []string `gorm:"serializer:json"`
 }
@@ -33,12 +33,12 @@ func (u *Users) ValidUser(username string, email string, password string, phone 
 	u.Id = uuid.New().String()
 	u.Username = username
 	u.Email = email
-	u.password = password
+	u.Password = password
 	u.Phone = &phone
 	u.Roles = roles
 	return nil
 }
 
 func (u *Users) SetPassword(pass string) {
-	u.password = pass
+	u.Password = pass
 }

@@ -10,6 +10,8 @@ func Encrypter(password string) (string, error) {
 }
 
 func CompareHash(hash string, password string) bool {
+	println(hash)
+	println(password)
 	isEqual := bcrypt.CompareHashAndPassword([]byte(hash), []byte(password))
-	return isEqual != nil
+	return isEqual == nil
 }
