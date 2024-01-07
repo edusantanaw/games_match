@@ -15,7 +15,8 @@ type CreateGameData struct {
 
 func RegisterGame(data *CreateGameData) utils.HttpResponse {
 	db := db.GetConnection()
-	game, err := entities.CreateValidGame(data.Name, data.Categories, data.Description, data.Plataforms)
+	game := &entities.Game{}
+	err := game.ValidGame(data.Name, data.Categories, data.Description, data.Plataforms)
 	if err != nil {
 		return utils.BadRequest[string](err.Error())
 	}

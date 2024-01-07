@@ -12,10 +12,11 @@ import (
 
 var secret = os.Getenv("JWT_SECRET")
 
-func CreateJwtToken(userId string) (string, error) {
+func CreateJwtToken(userId string, role []string) (string, error) {
 	atClaims := jwt.MapClaims{}
 	atClaims["authorized"] = true
 	atClaims["user_id"] = userId
+	atClaims["roles"] = role
 	at := jwt.NewWithClaims(jwt.SigningMethodHS256, atClaims)
 	token, err := at.SignedString([]byte(secret))
 	return token, err
@@ -24,10 +25,7 @@ func CreateJwtToken(userId string) (string, error) {
 func ExtractToken(r *gin.Context) (string, error) {
 	bearToken := r.Request.Header.Get("Authorization")
 	splitedToken := strings.Split(bearToken, " ")
-	if splitedToken[0] != "Bearer" {
-		return "", errors.New("Token invalido")
-	}
-	if len(splitedToken) != 2 {
+	if splitedToken[0] != "Bearer" || len(splitedToken) != 2 {
 		return "", errors.New("Token invalido")
 	}
 	return splitedToken[1], nil
@@ -52,7 +50,6 @@ func ExtractTokenMetadata(r *gin.Context) (string, error) {
 	claims, ok := token.Claims.(jwt.MapClaims)
 	if ok && token.Valid {
 		userId := fmt.Sprint(claims["user_id"])
-
 		return userId, nil
 	}
 	return "", err

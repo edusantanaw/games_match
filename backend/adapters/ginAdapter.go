@@ -9,16 +9,16 @@ type IController[T comparable] func(data T) httpResponse.HttpResponse
 
 func GinAdapter[T comparable](controller IController[T]) func(ctx *gin.Context) {
 	return func(ctx *gin.Context) {
-		var requestBody T
-		if err := ctx.BindJSON(&requestBody); err != nil {
+		var requestData T
+		if err := ctx.BindJSON(&requestData); err != nil {
 			ctx.JSON(400, gin.H{"error": err.Error()})
 			return
 		}
-		if err := ctx.BindQuery(&requestBody); err != nil {
+		if err := ctx.BindQuery(&requestData); err != nil {
 			ctx.JSON(400, gin.H{"error": err.Error()})
 			return
 		}
-		response := controller(requestBody)
+		response := controller(requestData)
 		ctx.JSON(response.StatusCode, response.Body)
 	}
 }

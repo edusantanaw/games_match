@@ -16,24 +16,23 @@ type Game struct {
 	Plataforms  []string `gorm:"serializer:json"`
 }
 
-func CreateValidGame(name string, categories []string, description string, plataforms []string) (*Game, error) {
-	game := &Game{}
+func (game *Game) ValidGame(name string, categories []string, description string, plataforms []string) error {
 	if name == "" {
-		return game, errors.New("O nome é obrigatorio!")
+		return errors.New("O nome é obrigatorio!")
 	}
 	if len(categories) == 0 {
-		return game, errors.New("Pelo menos uma categoria deve ser selecionada!")
+		return errors.New("Pelo menos uma categoria deve ser selecionada!")
 	}
 	if description == "" {
-		return game, errors.New("A descrição é obrigatoria!")
+		return errors.New("A descrição é obrigatoria!")
 	}
 	if len(plataforms) == 0 {
-		return game, errors.New("Pelo menos uma plataforma deve ser selecionada!")
+		return errors.New("Pelo menos uma plataforma deve ser selecionada!")
 	}
 	game.Id = uuid.New().String()
 	game.Name = name
 	game.Categories = categories
 	game.Plataforms = plataforms
 	game.Description = description
-	return game, nil
+	return nil
 }

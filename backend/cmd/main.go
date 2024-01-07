@@ -1,8 +1,6 @@
 package main
 
 import (
-	"time"
-
 	"github.com/edusantanaw/games_match.git/cmd/config"
 	"github.com/edusantanaw/games_match.git/internal/db"
 	"github.com/edusantanaw/games_match.git/internal/routes"
@@ -15,9 +13,4 @@ func main() {
 	db.OpenConnection()
 	routes.Routes(r)
 	r.Run()
-}
-
-func test(msg string, minute int) {
-	time.After(time.Duration(minute))
-	println(msg)
 }
