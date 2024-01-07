@@ -14,7 +14,6 @@ func SetAllEnvs() {
 	}
 	parsedEnv := string(env)
 	splitedEnv := strings.Split(parsedEnv, "\n")
-	println(len(splitedEnv))
 	for i := 0; i < len(splitedEnv); i++ {
 		splitedItem := strings.Split(splitedEnv[i], "=")
 		os.Setenv(splitedItem[0], splitedItem[1])

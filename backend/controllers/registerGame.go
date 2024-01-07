@@ -20,5 +20,5 @@ func RegisterGame(data *CreateGameData) httpResponse.HttpResponse {
 		return httpResponse.BadRequest[string](err.Error())
 	}
 	db.Create(&game)
-	return httpResponse.Created[entities.Game](game)
+	return httpResponse.Created[*entities.Game](game)
 }
