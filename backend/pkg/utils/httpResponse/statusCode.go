@@ -1,4 +1,4 @@
-package httpResponse
+package utils
 
 type HttpResponse struct {
 	StatusCode int

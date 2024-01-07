@@ -3,9 +3,9 @@ package main
 import (
 	"time"
 
-	"github.com/edusantanaw/games_match.git/config"
-	"github.com/edusantanaw/games_match.git/db"
-	"github.com/edusantanaw/games_match.git/routes"
+	"github.com/edusantanaw/games_match.git/cmd/config"
+	"github.com/edusantanaw/games_match.git/internal/db"
+	"github.com/edusantanaw/games_match.git/internal/routes"
 	"github.com/gin-gonic/gin"
 )
 

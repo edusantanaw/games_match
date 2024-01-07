@@ -1,10 +1,10 @@
 package controllers
 
 import (
-	"github.com/edusantanaw/games_match.git/db"
-	"github.com/edusantanaw/games_match.git/entities"
-	"github.com/edusantanaw/games_match.git/httpResponse"
-	"github.com/edusantanaw/games_match.git/structs"
+	"github.com/edusantanaw/games_match.git/internal/db"
+	"github.com/edusantanaw/games_match.git/internal/entities"
+	httpResponse "github.com/edusantanaw/games_match.git/pkg/utils/httpResponse"
+	structs "github.com/edusantanaw/games_match.git/pkg/utils/structs"
 )
 
 func LoadGames(data structs.IPagination) httpResponse.HttpResponse {

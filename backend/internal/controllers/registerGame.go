@@ -1,9 +1,9 @@
 package controllers
 
 import (
-	"github.com/edusantanaw/games_match.git/db"
-	"github.com/edusantanaw/games_match.git/entities"
-	"github.com/edusantanaw/games_match.git/httpResponse"
+	"github.com/edusantanaw/games_match.git/internal/db"
+	"github.com/edusantanaw/games_match.git/internal/entities"
+	utils "github.com/edusantanaw/games_match.git/pkg/utils/httpResponse"
 )
 
 type CreateGameData struct {
@@ -13,12 +13,12 @@ type CreateGameData struct {
 	Plataforms  []string `json:"plataforms"`
 }
 
-func RegisterGame(data *CreateGameData) httpResponse.HttpResponse {
+func RegisterGame(data *CreateGameData) utils.HttpResponse {
 	db := db.GetConnection()
 	game, err := entities.CreateValidGame(data.Name, data.Categories, data.Description, data.Plataforms)
 	if err != nil {
-		return httpResponse.BadRequest[string](err.Error())
+		return utils.BadRequest[string](err.Error())
 	}
 	db.Create(&game)
-	return httpResponse.Created[*entities.Game](game)
+	return utils.Created[*entities.Game](game)
 }

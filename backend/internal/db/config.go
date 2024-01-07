@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/edusantanaw/games_match.git/entities"
+	"github.com/edusantanaw/games_match.git/internal/entities"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )

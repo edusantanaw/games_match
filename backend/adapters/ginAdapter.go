@@ -1,7 +1,7 @@
 package adapters
 
 import (
-	"github.com/edusantanaw/games_match.git/httpResponse"
+	httpResponse "github.com/edusantanaw/games_match.git/pkg/utils/httpResponse"
 	"github.com/gin-gonic/gin"
 )
 

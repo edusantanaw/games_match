@@ -1,4 +1,4 @@
-package structs
+package utils
 
 type IPagination struct {
 	Take   int `form:"take"`
