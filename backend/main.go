@@ -1,6 +1,7 @@
 package main
 
 import (
+	"github.com/edusantanaw/games_match.git/adapters"
 	"github.com/edusantanaw/games_match.git/controllers"
 	"github.com/edusantanaw/games_match.git/db"
 	"github.com/gin-gonic/gin"
@@ -14,18 +15,6 @@ func main() {
 			"message": "pong",
 		})
 	})
-	r.POST("/game", func(ctx *gin.Context) {
-		var requestBody controllers.CreateGameData
-		if err := ctx.BindJSON(&requestBody); err != nil {
-			ctx.JSON(400, gin.H{"error": err.Error()})
-			return
-		}
-		gameJson, err := controllers.RegisterGame(requestBody)
-		if err != nil {
-			ctx.JSON(400, gin.H{"error": err.Error()})
-			return
-		}
-		ctx.JSON(200, gameJson)
-	})
+	r.POST("/game", adapters.GinAdapter[*controllers.CreateGameData](controllers.RegisterGame))
 	r.Run()
 }
