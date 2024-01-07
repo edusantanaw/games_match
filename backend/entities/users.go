@@ -4,9 +4,10 @@ import "gorm.io/gorm"
 
 type Users struct {
 	gorm.Model
-	Id       string
+	Id       string `gorm:"primaryKey"`
 	username string
-	email    string
+	email    string `gorm:"unique"`
 	password string
-	phone    string
+	phone    *string
+	Roles    []string `gorm:"serializer:json"`
 }

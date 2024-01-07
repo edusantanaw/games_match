@@ -9,7 +9,7 @@ import (
 
 type Game struct {
 	gorm.Model
-	Id          string
+	Id          string `gorm:"primaryKey"`
 	Name        string
 	Categories  []string `gorm:"serializer:json"`
 	Description string
