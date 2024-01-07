@@ -17,7 +17,7 @@ func CreateJwtToken(userId string, role []string) (string, error) {
 	atClaims["authorized"] = true
 	atClaims["user_id"] = userId
 	atClaims["roles"] = role
-	at := jwt.NewWithClaims(jwt.SigningMethodHS256, atClaims)
+	at := jwt.NewWithClaims(&jwt.SigningMethodHMAC{}, atClaims)
 	token, err := at.SignedString([]byte(secret))
 	return token, err
 }
@@ -25,6 +25,7 @@ func CreateJwtToken(userId string, role []string) (string, error) {
 func ExtractToken(r *gin.Context) (string, error) {
 	bearToken := r.Request.Header.Get("Authorization")
 	splitedToken := strings.Split(bearToken, " ")
+	println(bearToken)
 	if splitedToken[0] != "Bearer" || len(splitedToken) != 2 {
 		return "", errors.New("Token invalido")
 	}

@@ -12,10 +12,12 @@ func GinAdapter[T comparable](controller IController[T]) func(ctx *gin.Context) 
 		var requestData T
 		if err := ctx.BindJSON(&requestData); err != nil {
 			ctx.JSON(400, gin.H{"error": err.Error()})
+			ctx.Abort()
 			return
 		}
 		if err := ctx.BindQuery(&requestData); err != nil {
 			ctx.JSON(400, gin.H{"error": err.Error()})
+			ctx.Abort()
 			return
 		}
 		response := controller(requestData)
