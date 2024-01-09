@@ -14,6 +14,7 @@ type Game struct {
 	Categories  []string `gorm:"serializer:json"`
 	Description string
 	Plataforms  []string `gorm:"serializer:json"`
+	Group       []Group
 }
 
 func (game *Game) ValidGame(name string, categories []string, description string, plataforms []string) error {

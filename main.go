@@ -1,7 +1,5 @@
 package main
 
-import "encoding/json"
-
 type Node struct {
 	value int
 	left  *Node
@@ -15,11 +13,6 @@ type Tree struct {
 func main() {
 	tree := &Tree{}
 	tree.append(10)
-	parsedJson, err := json.Marshal(Node{value: 10})
-	println(string(parsedJson))
-	if err != nil {
-		(err.Error())
-	}
 	tree.startPrint()
 }
 

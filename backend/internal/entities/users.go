@@ -9,12 +9,13 @@ import (
 
 type Users struct {
 	gorm.Model
-	Id       string `gorm:"primaryKey"`
-	Username string
-	Email    string `gorm:"unique"`
-	Password string
-	Phone    *string
-	Roles    []string `gorm:"serializer:json"`
+	Id          string `gorm:"primaryKey"`
+	Username    string
+	Email       string `gorm:"unique"`
+	Password    string
+	Phone       *string
+	Roles       []string `gorm:"serializer:json"`
+	GroupMember []GroupMember
 }
 
 func (u *Users) ValidUser(username string, email string, password string, phone string, roles []string) error {
